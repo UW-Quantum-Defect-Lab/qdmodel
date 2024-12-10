@@ -156,7 +156,7 @@ class speFile3:
         if ylim:
             plt.ylim(-10,ylim)
         plt.title("Frame " + str(frame+1) + " out of " + str(self.numFrames))
-        plt.show()
+        #plt.show()
 
     def plotFramesColor(self, units = None, maxs = None, ylim = None):
         xaxis, xlab, _ = self.unitConversion(self.wavelengths, units = units)
@@ -174,24 +174,6 @@ class speFile3:
     def savetoCSV(self, filename, units = None, frame = 0):
         xaxis, xlab, _ = self.unitConversion(self.wavelengths, units = units)
         np.savetxt(filename[:-3]+"csv", np.transpose([xaxis, self.data[frame][0][0]]), delimiter = ',')
-
-    # converts all spe files in a folder to csv
-    def convert_spe_to_csv(folder_path):
-        for root, dirs, files in os.walk(folder_path):
-            for filename in files:
-                if filename.endswith(".spe"):
-                    spe_path = os.path.join(root, filename)
-                    csv_path = os.path.splitext(spe_path)[0] + ".csv"
-                    spe_data = speFile3(spe_path)
-                    num_frames = spe_data.numFrames
-                    wavelengths = spe_data.wavelengths
-                    data = spe_data.data
-                    
-                    df = pd.DataFrame(data[0][0][0], columns=["Frame 1"])
-                    for i in range(1, num_frames):
-                        df[f"Frame {i+1}"] = data[i][0][0]
-                    df.insert(0, "Wavelength", wavelengths)
-                    df.to_csv(csv_path, index=False)
 
     # unit conversions for wavelengths to specified units
     @staticmethod
@@ -268,7 +250,6 @@ class speFile3:
 
     # interactive plot for pause play and looping through frames via animation
     def interactivePlot(self, units = None):
-        # made by vasillis and chatgpt
         import ipywidgets as widgets
         from IPython.display import display
 
