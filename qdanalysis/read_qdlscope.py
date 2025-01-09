@@ -26,15 +26,17 @@ class readQDLScope:
     plotIntensity():
         Plots the intensity data against time.
     """
-    def __init__(self):
-        file_path = filedialog.askopenfilename(filetypes=[("HDF5 files", "*.hdf5")])
+    def __init__(self, filepath=None):
+        if filepath == None:
+            file_path = filedialog.askopenfilename(filetypes=[("HDF5 files", "*.hdf5")])
 
-        if not file_path:
-            raise ValueError("No file selected")
+            if not file_path:
+                raise ValueError("No file selected")
 
-        if not file_path.endswith('.hdf5'):
-            raise ValueError("Selected file is not an HDF5 file")
-        
+            if not file_path.endswith('.hdf5'):
+                raise ValueError("Selected file is not an HDF5 file")
+        else:
+            file_path = filepath
         self.filename = file_path
         self.data = h5py.File(file_path, 'r')
         self.intensity = self.data['data']['intensity'][:]
@@ -44,11 +46,12 @@ class readQDLScope:
         self.data.close()
 
     def plotIntensity(self):
-        plt.plot(self.timestamps, self.intensity)
-        plt.xlabel('Time (s)')
-        plt.ylabel('Intensity (c/s)')
-        plt.title('Intensity vs Time (Integration time = {}s)'.format(self.integration_time))
-        plt.show()
+        fig, ax = plt.subplots(1, 1, figsize=(7, 5))
+        ax.plot(self.timestamps, self.intensity)
+        ax.set_xlabel('Time (s)')
+        ax.set_ylabel('Intensity (c/s)')
+        ax.set_title('Intensity vs Time (Integration time = {}s)'.format(self.integration_time))
+        return fig, ax
     
     def plot_with_exp_decay(self, ax=None):
         def exp_decay(t, A, tau, C):
@@ -102,5 +105,6 @@ class readQDLScope:
 
 if __name__ == "__main__":
     dat = readQDLScope()
-    dat.plotIntensity()
-    dat.plot_fits()
+    fig, ax = dat.plotIntensity()
+    plt.show()
+    #dat.plot_fits()
