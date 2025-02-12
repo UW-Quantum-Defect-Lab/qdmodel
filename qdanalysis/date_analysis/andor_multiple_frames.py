@@ -27,7 +27,7 @@ def plot_frames(image_data, scale = []):
 
 
 if __name__ == "__main__":
-    filename = '/Users/tommtommbom/Desktop/qdrepos/andor_data/2025_01_08/dotvid3_10uW.sif'
+    filename = '/Users/tommtommbom/Desktop/qdrepos/andor_data/2025_01_22/beads/1_free&tether&stuck.sif'
     image_data = openSIF(filename)
-    plot_frames(image_data, [0,500])
+    plot_frames(image_data, [0,10000])
     
