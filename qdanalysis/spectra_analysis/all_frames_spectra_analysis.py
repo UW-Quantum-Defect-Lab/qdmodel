@@ -3,12 +3,12 @@ import matplotlib.pyplot as plt
 import spe_loader as sl
 import scipy as sp
 import scipy.constants as sc
-from spefile3 import *
+from qdanalysis.spectra_analysis.spefile3 import *
 import glob
 from scipy.stats import norm
 import os
 import pandas as pd
-from spefile3 import speFile3
+from qdanalysis.spectra_analysis.spefile3 import speFile3
 
 from IPython.display import display, clear_output
 import ipywidgets as widgets
