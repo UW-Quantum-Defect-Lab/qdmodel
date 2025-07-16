@@ -16,3 +16,4 @@ dependencies:
       - defusedxml
       - spe2py
       - untangle
+      - nidaqmx
